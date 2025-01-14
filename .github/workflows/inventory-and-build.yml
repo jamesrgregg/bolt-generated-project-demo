@@ -20,7 +20,7 @@ jobs:
 
       - name: Build
         run: |
-          python setup.py build
+          python setup.py sdist
 
       - name: Test
         run: |
