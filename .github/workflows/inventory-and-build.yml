@@ -33,9 +33,11 @@ jobs:
           source env/bin/activate
           python -m unittest discover -s tests
 
-      - name: Scan
+      - name: Security Scan with Bandit
         run: |
-          docker scan .
+          source env/bin/activate
+          pip install bandit
+          bandit -r my_app
 
       - name: Create SBOM
         run: |
@@ -45,16 +47,15 @@ jobs:
         run: |
           docker run --rm -v $(pwd):/app -w /app google/slsa:latest --image-name my-image --build-args MY_BUILD_ARGS --output-format json > attestation.json
 
-      - name: Push artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: sbom.json
-          path: sbom.json
-
       - name: Package application
         run: |
           docker build -t my-image .
           docker tag my-image $(gh cr-registry)/my-image:latest
+
+      - name: Trivy Scan Docker Image
+        uses: aquasecurity/trivy-action@v0.2.0
+        with:
+          image-ref: my-image
 
       - name: Release package
         uses: softprops/action-gh-release@v2.2.1
