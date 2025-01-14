@@ -1,0 +1,56 @@
+name: Inventory and Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  inventory-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up build environment
+        run: |
+          python3 -m venv env
+          source env/bin/activate
+          pip install -r requirements.txt
+
+      - name: Build
+        run: |
+          python setup.py build
+
+      - name: Test
+        run: |
+          python -m unittest discover -s tests
+
+      - name: Scan
+        run: |
+          docker scan .
+
+      - name: Create SBOM
+        run: |
+          docker run --rm -v $(pwd):/app -w /app trufflesecurity/sbom:latest -o sbom.json
+
+      - name: Create attestation for SLSA Level 3
+        run: |
+          docker run --rm -v $(pwd):/app -w /app google/slsa:latest --image-name my-image --build-args MY_BUILD_ARGS --output-format json > attestation.json
+
+      - name: Push artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: sbom.json
+          path: sbom.json
+
+      - name: Package application
+        run: |
+          docker build -t my-image .
+          docker tag my-image $(gh cr-registry)/my-image:latest
+
+      - name: Release package
+        uses: actions/upload-release-asset@v3
+        with:
+          name: my-image:latest
+          path: $(gh cr-registry)/my-image:latest
