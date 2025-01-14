@@ -53,7 +53,7 @@ jobs:
           docker tag my-image $(gh cr-registry)/my-image:latest
 
       - name: Trivy Scan Docker Image
-        uses: aquasecurity/trivy-action@v0.29.0
+        uses: aquasecurity/trivy-action@v0.29
         with:
           image-ref: my-image
 
