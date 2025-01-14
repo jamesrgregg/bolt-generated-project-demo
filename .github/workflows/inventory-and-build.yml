@@ -46,9 +46,14 @@ jobs:
           format: cyclonedx
           output: sbom.json
 
-      - name: Create attestation for SLSA Level 3
+      - name: Install Chainloop CLI
         run: |
-          docker run --rm -v $(pwd):/app -w /app google/slsa:latest --image-name my-image --build-args MY_BUILD_ARGS --output-format json > attestation.json
+          curl -sSL https://get.chainloop.dev | bash
+          export PATH=$PATH:$HOME/.chainloop/bin
+
+      - name: Create attestation for SLSA Level 3 with Chainloop
+        run: |
+          chainloop attestation create --image-name my-image --output attestation.json
 
       - name: Package application
         run: |
