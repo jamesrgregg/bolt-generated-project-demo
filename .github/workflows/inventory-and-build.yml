@@ -50,7 +50,14 @@ jobs:
           docker tag my-image $(gh cr-registry)/my-image:latest
 
       - name: Release package
-        uses: actions/upload-release-asset@v3
+        uses: softprops/action-gh-release@v2.2.1
         with:
-          name: my-image:latest
-          path: $(gh cr-registry)/my-image:latest
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          release_name: my-image
+          release_description: My image release
+          prerelease: false
+          draft: false
+          tag_name: $(gh cr-registry)/my-image:latest
+          files: |
+            - sbom.json
+            - attestation.json
