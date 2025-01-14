@@ -12,23 +12,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up build environment
+      - name: Set up Python environment
         run: |
           python3 -m venv env
+          source env/bin/activate
+          pip install --upgrade pip
+
+      - name: Install dependencies
+        run: |
           source env/bin/activate
           pip install -r requirements.txt
 
       - name: Build
         run: |
+          source env/bin/activate
           python setup.py sdist
 
       - name: Test
         run: |
+          source env/bin/activate
           python -m unittest discover -s tests
-
-      - name: Install dependencies for tests
-        run: |
-          pip install -r requirements.txt
 
       - name: Scan
         run: |
