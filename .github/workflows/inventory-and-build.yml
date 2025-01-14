@@ -39,9 +39,12 @@ jobs:
           pip install bandit
           bandit -r my_app
 
-      - name: Create SBOM
-        run: |
-          docker run --rm -v $(pwd):/app -w /app trufflesecurity/sbom:latest -o sbom.json
+      - name: Create SBOM with Trivy
+        uses: aquasecurity/trivy-action@0.29.0
+        with:
+          scan-type: fs
+          format: cyclonedx
+          output: sbom.json
 
       - name: Create attestation for SLSA Level 3
         run: |
