@@ -75,7 +75,7 @@ jobs:
           release_description: My image release
           prerelease: false
           draft: false
-          tag_name: $(gh cr-registry)/my-image:latest
+          tag_name: my-image:latest
           files: |
             - sbom.json
-            - attestation.json
+            # - attestation.json
