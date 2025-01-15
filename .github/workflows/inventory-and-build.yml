@@ -74,7 +74,7 @@ jobs:
       - name: Create Release
         run: cat Release.txt
       - name: Release
-      - uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1
         with:
-          artifacts: "release.tar.gz,foo/*.txt"
+          artifacts: "*.tar.gz,*.txt,sbom.json"
           bodyFile: "body.md"
