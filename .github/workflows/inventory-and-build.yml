@@ -74,8 +74,8 @@ jobs:
         run: |
           cat Release.txt
           gh release create v1.0.0
-          env:
-            GH_TOKEN: ${{ github.token }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
       - name: GH Release
         uses: softprops/action-gh-release@v2.2.1
