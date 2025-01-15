@@ -2,11 +2,11 @@ name: Inventory and Build
 
 on:
   push:
-    tags:
-      - "v*"
     branches:
       - main
-
+  create:
+      tags:
+        - v*
 jobs:
   inventory-and-build:
     runs-on: ubuntu-latest
