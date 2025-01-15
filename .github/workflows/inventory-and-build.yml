@@ -2,11 +2,10 @@ name: Inventory and Build
 
 on:
   push:
+    tags:
+      - "v*.*.*"
     branches:
       - main
-  create:
-      tags:
-        - v*
 jobs:
   inventory-and-build:
     runs-on: ubuntu-latest
@@ -73,8 +72,5 @@ jobs:
         run: echo ${{ github.sha }} > Release.txt
       - name: Create Release
         run: cat Release.txt
-      - name: Release
-        uses: ncipollo/release-action@v1.15.0
-        with:
-          artifacts: "*.tar.gz,*.txt,sbom.json"
-          bodyFile: "body.md"
+      - name: GH Release
+        uses: softprops/action-gh-release@v2.2.1
