@@ -88,11 +88,16 @@ jobs:
       - name: Fetch Tags
         run: |
           git fetch --tags
-          
-      - name: GH Release
+
+      - name: Generate Changelog
+        run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt
+
+      - name: Release
         uses: softprops/action-gh-release@v2.2.1
         if: startsWith(github.ref, 'refs/tags/')
         with:
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
+          repository: ${{ github.repository }}
           files: |
             release/Release.txt
             release/sbom.json
