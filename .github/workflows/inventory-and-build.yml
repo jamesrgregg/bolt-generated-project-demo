@@ -2,10 +2,10 @@ name: Inventory and Build
 
 on:
   push:
+    tags:
+      - "v*"
     branches:
       - main
-    tags:
-      - '*'
 
 jobs:
   inventory-and-build:
@@ -74,7 +74,7 @@ jobs:
       - name: Create Release
         run: cat Release.txt
       - name: Release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.15.0
         with:
           artifacts: "*.tar.gz,*.txt,sbom.json"
           bodyFile: "body.md"
