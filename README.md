@@ -3,7 +3,8 @@
 To use this tool you need to have API keys to [FMP](https://site.financialmodelingprep.com/), and a Groq API key.
 
 Copy .env-example to .env and update with your keys.
-Make sure .gitignore includes `.env`
+Make sure .gitignore includes `.env`.
+
 
 
 ## Demo 
