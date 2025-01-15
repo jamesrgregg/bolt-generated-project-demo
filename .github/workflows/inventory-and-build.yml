@@ -50,6 +50,7 @@ jobs:
         run: |
           curl -sfL https://docs.chainloop.dev/install.sh | bash -s
           # export PATH=$PATH:$HOME/.chainloop/bin
+          chainloop auth login
           chainloop organization create --name arena-si-devops
 
       - name: Create attestation for SLSA Level 3 with Chainloop
