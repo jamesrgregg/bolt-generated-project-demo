@@ -83,7 +83,9 @@ jobs:
           git push origin $tag_name
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+      - name: Fetch Tags
+        run: |
+          git fetch --tags
       - name: GH Release
         uses: softprops/action-gh-release@v2.2.1
         if: startsWith(github.ref, 'refs/tags/')
