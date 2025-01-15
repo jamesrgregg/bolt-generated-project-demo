@@ -70,7 +70,9 @@ jobs:
 
       - name: Get Release SHA
         run: echo ${{ github.sha }} > Release.txt
-      - name: Create Release
-        run: cat Release.txt
+      - name: Create Release Tag
+        run: |
+          cat Release.txt
+          gh release create v1.0.0
       - name: GH Release
         uses: softprops/action-gh-release@v2.2.1
