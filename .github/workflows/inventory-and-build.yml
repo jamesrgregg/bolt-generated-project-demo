@@ -60,7 +60,7 @@ jobs:
       - name: Package application
         run: |
           docker build -t my-image .
-          docker tag my-image $(gh registry)/my-image:latest
+          docker tag my-image jamesrgregg/my-image:latest
 
       - name: Trivy Scan Docker Image
         uses: aquasecurity/trivy-action@0.29.0
@@ -75,7 +75,7 @@ jobs:
           release_description: My image release
           prerelease: false
           draft: false
-          tag_name: my-image:latest
+          tag_name: jamesrgregg/my-image:latest
           files: |
             - sbom.json
             # - attestation.json
