@@ -60,7 +60,7 @@ jobs:
       - name: Package application
         run: |
           docker build -t my-image .
-          docker tag my-image $(gh cr-registry)/my-image:latest
+          docker tag my-image $(gh registry)/my-image:latest
 
       - name: Trivy Scan Docker Image
         uses: aquasecurity/trivy-action@0.29.0
