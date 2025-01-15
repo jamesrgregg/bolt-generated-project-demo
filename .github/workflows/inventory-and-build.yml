@@ -80,6 +80,7 @@ jobs:
         id: create_tag
         run: |
           tag_name="v1.0.${{ github.run_number }}"
+          echo "::set-output name=tag_name::$tag_name"
           git tag $tag_name
           git push origin $tag_name
         env:
@@ -90,13 +91,13 @@ jobs:
           git fetch --tags
 
       - name: Generate Changelog
-        run: echo "# Good things have arrived" > release/CHANGELOG.txt
+        run: echo "# Demo Release" > release/CHANGELOG.txt
 
-      - name: Set GITHUB_REF 
-        uses: actions/github-script@v5 
-        with: 
-          script: | 
-            github.ref = 'refs/tags/' + '${{ steps.create_tag.outputs.tag_name }}'
+      # - name: Set GITHUB_REF 
+      #   uses: actions/github-script@v5 
+      #   with: 
+      #     script: | 
+      #       github.ref = 'refs/tags/' + '${{ steps.create_tag.outputs.tag_name }}'
 
       # - name: Release
       #   uses: softprops/action-gh-release@v2.2.1
