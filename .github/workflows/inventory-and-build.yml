@@ -92,6 +92,12 @@ jobs:
       - name: Generate Changelog
         run: echo "# Good things have arrived" > release/CHANGELOG.txt
 
+      - name: Set GITHUB_REF 
+        uses: actions/github-script@v5 
+        with: 
+          script: | 
+            github.ref = 'refs/tags/' + '${{ steps.create_tag.outputs.tag_name }}'
+
       - name: Release
         uses: softprops/action-gh-release@v2.2.1
         if: startsWith(github.ref, 'refs/tags/')
