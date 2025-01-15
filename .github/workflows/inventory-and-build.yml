@@ -81,8 +81,8 @@ jobs:
           tag_name="v1.0.${{ github.run_number }}"
           git tag $tag_name
           git push origin $tag_name
-          env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
       - name: GH Release
         uses: softprops/action-gh-release@v2.2.1
